@@ -4,6 +4,8 @@ Article service with business logic and NLP operations
 
 import json
 import numpy as np
+import pandas as pd
+import os
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 import asyncio
@@ -155,33 +157,92 @@ class ArticleService:
         return topic_articles
     
     async def get_article_stats(self) -> Dict[str, Any]:
-        """Get article statistics"""
-        all_articles = await self.get_all_articles(limit=10000)
-        
-        stats = {
-            "total_articles": len(all_articles),
-            "articles_with_abstracts": len([a for a in all_articles if a.abstract]),
-            "articles_with_doi": len([a for a in all_articles if a.doi]),
-            "articles_with_pmc_id": len([a for a in all_articles if a.pmc_id]),
-            "article_types": {},
-            "journals": {},
-            "publication_years": {}
-        }
-        
-        # Count article types
-        for article in all_articles:
-            article_type = article.article_type
-            stats["article_types"][article_type] = stats["article_types"].get(article_type, 0) + 1
+        """Get article statistics from CSV file"""
+        try:
+            # Try to read from CSV file as the database is empty
+            csv_path = "../datasets/sb_publications_clean.csv"
+            if not os.path.exists(csv_path):
+                csv_path = "datasets/sb_publications_clean.csv"
             
-            if article.journal:
-                stats["journals"][article.journal] = stats["journals"].get(article.journal, 0) + 1
-            
-            if article.publication_date:
-                year = article.publication_date.year if hasattr(article.publication_date, 'year') else None
-                if year:
-                    stats["publication_years"][str(year)] = stats["publication_years"].get(str(year), 0) + 1
-        
-        return stats
+            if os.path.exists(csv_path):
+                df = pd.read_csv(csv_path)
+                
+                # Extract year from the data if it exists
+                if 'year' not in df.columns and 'link' in df.columns:
+                    df['year'] = df['link'].str.extract(r'(\d{4})')
+                    df['year'] = pd.to_numeric(df['year'], errors='coerce')
+                    df['year'] = df['year'].where((df['year'] >= 1990) & (df['year'] <= 2024))
+                
+                stats = {
+                    "total_articles": len(df),
+                    "articles_with_text": len(df[df['text'].notna()]) if 'text' in df.columns else 0,
+                    "articles_with_clean_text": len(df[df['clean_text'].notna()]) if 'clean_text' in df.columns else 0,
+                    "article_types": {"research": len(df)},  # Default to research
+                    "topics": {},
+                    "publication_years": {}
+                }
+                
+                # Count topics
+                if 'topic' in df.columns:
+                    topic_counts = df['topic'].value_counts().to_dict()
+                    stats["topics"] = {str(k): int(v) for k, v in topic_counts.items() if pd.notna(k)}
+                    stats["unique_topics"] = len([k for k in topic_counts.keys() if k != -1 and pd.notna(k)])
+                
+                # Count years
+                if 'year' in df.columns:
+                    year_counts = df['year'].value_counts().to_dict()
+                    stats["publication_years"] = {str(int(k)): int(v) for k, v in year_counts.items() if pd.notna(k)}
+                
+                # Word count statistics
+                if 'word_count' in df.columns:
+                    stats["avg_word_count"] = float(df['word_count'].mean()) if df['word_count'].notna().any() else 0
+                    stats["min_word_count"] = int(df['word_count'].min()) if df['word_count'].notna().any() else 0
+                    stats["max_word_count"] = int(df['word_count'].max()) if df['word_count'].notna().any() else 0
+                
+                return stats
+            else:
+                # Fallback to database if CSV not found
+                all_articles = await self.get_all_articles(limit=10000)
+                
+                stats = {
+                    "total_articles": len(all_articles),
+                    "articles_with_abstracts": len([a for a in all_articles if a.abstract]),
+                    "articles_with_doi": len([a for a in all_articles if getattr(a, 'doi', None)]),
+                    "articles_with_pmc_id": len([a for a in all_articles if getattr(a, 'pmc_id', None)]),
+                    "article_types": {},
+                    "journals": {},
+                    "publication_years": {}
+                }
+                
+                # Count article types
+                for article in all_articles:
+                    article_type = getattr(article, 'article_type', 'unknown')
+                    if article_type:
+                        stats["article_types"][article_type] = stats["article_types"].get(article_type, 0) + 1
+                    
+                    if article.journal:
+                        stats["journals"][article.journal] = stats["journals"].get(article.journal, 0) + 1
+                    
+                    # Handle year from both 'year' field and 'publication_date' field
+                    year = None
+                    if hasattr(article, 'year') and article.year:
+                        year = article.year
+                    elif hasattr(article, 'publication_date') and article.publication_date:
+                        try:
+                            if isinstance(article.publication_date, str):
+                                year = int(article.publication_date.split('-')[0])
+                            elif hasattr(article.publication_date, 'year'):
+                                year = article.publication_date.year
+                        except (ValueError, AttributeError, IndexError):
+                            pass
+                    
+                    if year:
+                        stats["publication_years"][str(year)] = stats["publication_years"].get(str(year), 0) + 1
+                
+                return stats
+                
+        except Exception as e:
+            raise Exception(f"Error getting stats: {str(e)}")
     
     async def _semantic_search(self, query: str, threshold: float, limit: int) -> List[SimilarityResult]:
         """Perform semantic search using embeddings"""

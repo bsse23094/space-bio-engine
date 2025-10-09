@@ -47,12 +47,9 @@ class VisualizationService:
             # Load main publications data
             if os.path.exists(self.data_path):
                 self.df = pd.read_csv(self.data_path)
-                # Extract year from links
-                self.df['year'] = self.df['link'].str.extract(r'PMC(\d{4})')
-                self.df['year'] = pd.to_numeric(self.df['year'], errors='coerce')
-                self.df['year'] = self.df['year'].where(
-                    (self.df['year'] >= 1990) & (self.df['year'] <= 2024)
-                )
+                # Since the CSV doesn't have year data in links, initialize year column as None
+                # Year data would need to come from a different source (API metadata, etc.)
+                self.df['year'] = None
             
             # Load topics data
             if os.path.exists(self.topics_path):
@@ -118,11 +115,15 @@ class VisualizationService:
         - Line charts: 'year' on x-axis, 'article_count' on y-axis
         - Multi-line charts: Use 'topics' dict for topic-specific trends
         """
-        if self.df is None:
+        if self.df is None or 'year' not in self.df.columns:
             return []
         
         # Filter by year range if specified
-        df_filtered = self.df.copy()
+        df_filtered = self.df[self.df['year'].notna()].copy()
+        
+        if len(df_filtered) == 0:
+            return []
+        
         if start_year:
             df_filtered = df_filtered[df_filtered['year'] >= start_year]
         if end_year:
@@ -138,7 +139,7 @@ class VisualizationService:
             topic_counts = year_data['topic'].value_counts().to_dict()
             
             # Convert to int keys and filter out -1
-            topic_counts = {int(k): int(v) for k, v in topic_counts.items() if k != -1}
+            topic_counts = {int(k): int(v) for k, v in topic_counts.items() if k != -1 and pd.notna(k)}
             
             trends.append(TemporalAnalysis(
                 year=int(year),
@@ -338,14 +339,20 @@ class VisualizationService:
         # Basic statistics
         total_articles = len(self.df)
         articles_with_topics = len(self.df[self.df['topic'].notna() & (self.df['topic'] != -1)])
-        articles_with_year = len(self.df[self.df['year'].notna()])
+        
+        # Check if year column exists and has data
+        articles_with_year = 0
+        if 'year' in self.df.columns:
+            articles_with_year = len(self.df[self.df['year'].notna()])
+        
         unique_topics = self.df['topic'].nunique() - (1 if -1 in self.df['topic'].values else 0)
         
         # Year range
         year_range = None
         if articles_with_year > 0:
             years = self.df['year'].dropna()
-            year_range = {"min": int(years.min()), "max": int(years.max())}
+            if len(years) > 0:
+                year_range = {"min": int(years.min()), "max": int(years.max())}
         
         # Average word count
         avg_word_count = self.df['word_count'].mean() if 'word_count' in self.df.columns else None
@@ -353,7 +360,7 @@ class VisualizationService:
         # Get topic distribution
         topic_distribution = await self.get_topic_distribution()
         
-        # Get temporal trends
+        # Get temporal trends (will be empty if no year data)
         temporal_trends = await self.get_temporal_trends()
         
         return StatisticsResponse(

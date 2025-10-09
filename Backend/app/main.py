@@ -180,17 +180,27 @@ async def get_api_stats():
         
         # Load basic stats
         df_path = "../datasets/sb_publications_clean.csv"
+        if not os.path.exists(df_path):
+            df_path = "datasets/sb_publications_clean.csv"
+            
         if os.path.exists(df_path):
             df = pd.read_csv(df_path)
+            
+            # Extract year if not present
+            if 'year' not in df.columns and 'link' in df.columns:
+                df['year'] = df['link'].str.extract(r'(\d{4})')
+                df['year'] = pd.to_numeric(df['year'], errors='coerce')
+                df['year'] = df['year'].where((df['year'] >= 1990) & (df['year'] <= 2024))
+            
             stats = {
                 "total_articles": len(df),
-                "articles_with_topics": len(df[df['topic'].notna() & (df['topic'] != -1)]),
-                "articles_with_year": len(df[df['year'].notna()]),
-                "unique_topics": df['topic'].nunique() - (1 if -1 in df['topic'].values else 0),
-                "average_word_count": df['word_count'].mean() if 'word_count' in df.columns else None,
+                "articles_with_topics": len(df[df['topic'].notna() & (df['topic'] != -1)]) if 'topic' in df.columns else 0,
+                "articles_with_year": len(df[df['year'].notna()]) if 'year' in df.columns else 0,
+                "unique_topics": int(df['topic'].nunique() - (1 if -1 in df['topic'].values else 0)) if 'topic' in df.columns else 0,
+                "average_word_count": float(df['word_count'].mean()) if 'word_count' in df.columns and df['word_count'].notna().any() else 0,
                 "year_range": {
-                    "min": int(df['year'].min()) if 'year' in df.columns else None,
-                    "max": int(df['year'].max()) if 'year' in df.columns else None
+                    "min": int(df['year'].min()) if 'year' in df.columns and df['year'].notna().any() else None,
+                    "max": int(df['year'].max()) if 'year' in df.columns and df['year'].notna().any() else None
                 }
             }
         else:

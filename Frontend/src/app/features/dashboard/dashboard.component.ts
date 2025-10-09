@@ -31,12 +31,13 @@ export class DashboardComponent implements OnInit {
     // Load statistics
     this.api.getStatistics().subscribe({
       next: (res) => {
+        console.log('Stats loaded successfully:', res);
         this.stats = res;
         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
-        this.error = 'Failed to load statistics';
+        console.error('Stats error:', err);
+        this.error = `Stats error: ${err.message || err.error?.detail || 'Unknown error'}`;
         this.loading = false;
       }
     });
