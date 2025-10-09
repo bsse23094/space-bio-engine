@@ -1,0 +1,110 @@
+# Space Biology Knowledge Engine - Git Ignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+data/
+logs/
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Model files
+*.pkl
+*.joblib
+*.h5
+*.model
+
+# Embeddings and large files
+embeddings/
+models/
+*.bin
+*.index
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Documentation
+docs/_build/
+site/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Frontend/Node.js
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.angular/
+Frontend/out-tsc/
+Frontend/tmp/
+Frontend/.npm
+Frontend/.eslintcache
+Frontend/*.tsbuildinfo
+Frontend/.parcel-cache
+Frontend/.cache
+Frontend/.next
+Frontend/.nuxt
+Frontend/.storybook-out
+Frontend/.out
+Frontend/coverage/
+Frontend/*.log
+Frontend/npm-debug.log*
+Frontend/yarn-debug.log*
+Frontend/yarn-error.log*
+Frontend/.yarn-integrity
+Frontend/.env
+Frontend/.env.local
+Frontend/.env.development.local
+Frontend/.env.test.local
+Frontend/.env.production.local

@@ -1,0 +1,124 @@
+/* Premium Dark Corporate Theme - Glassmorphism & Aurora Effects */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+:root {
+  --primary-cyan: #00d4ff;
+  --primary-purple: #8b5cf6;
+  --dark-bg: #0a0a1e;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0a0a1e 0%, #1a0b2e 50%, #0a0a1e 100%);
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Aurora Background Effect */
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a1e 0%, #1a0b2e 50%, #0a0a1e 100%);
+}
+
+.aurora-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+  animation: aurora-move 20s ease-in-out infinite;
+}
+
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.03) 50%, transparent 70%),
+              linear-gradient(-45deg, transparent 30%, rgba(139, 92, 246, 0.03) 50%, transparent 70%);
+  animation: aurora-flow 15s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-move {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(10%, 10%) rotate(5deg); }
+  66% { transform: translate(-10%, 5%) rotate(-5deg); }
+}
+
+@keyframes aurora-flow {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+/* Glowing Lines Effect */
+.glow-lines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.glow-line {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+  box-shadow: 0 0 10px var(--primary-cyan);
+  animation: glow-line-flow 10s linear infinite;
+}
+
+@keyframes glow-line-flow {
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(100vw); opacity: 0; }
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 3px white;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.2; }
+}

@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <div class="logo">SpaceBio<span>Engine</span></div>
+  <div class="menu-toggle" (click)="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li><a routerLink="/articles" routerLinkActive="active">Articles</a></li>
+    <li><a routerLink="/search" routerLinkActive="active">Search</a></li>
+  <!-- Removed About and Contact links -->
+  </ul>
+  <div class="mobile-menu" [class.active]="menuOpen">
+    <a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
+    <a routerLink="/articles" (click)="closeMenu()">Articles</a>
+    <a routerLink="/search" (click)="closeMenu()">Search</a>
+  <!-- Removed About and Contact links from mobile menu -->
+    <span class="close-menu" (click)="closeMenu()">&times;</span>
+  </div>
+</nav>

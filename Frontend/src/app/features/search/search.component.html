@@ -1,0 +1,16 @@
+<section class="search-section">
+  <h2 class="section-title">Semantic Search</h2>
+  <form (submit)="search(); $event.preventDefault()" class="search-form">
+    <input type="text" [(ngModel)]="query" placeholder="Search articles..." />
+    <button type="submit" class="search-btn">Search</button>
+  </form>
+  <div *ngIf="loading">Searching...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div class="search-results">
+    <div *ngFor="let result of results" class="result-card">
+      <h3>{{ result.title }}</h3>
+      <p>{{ result.abstract }}</p>
+      <span class="result-meta">{{ result.year }} | {{ result.topic }}</span>
+    </div>
+  </div>
+</section>

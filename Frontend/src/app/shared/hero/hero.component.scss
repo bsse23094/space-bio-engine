@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+.hero-section {
+  position: relative;
+  width: 100vw;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a16 60%, #232526 100%);
+  overflow: hidden;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;
+  background: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 4rem 2rem 2rem;
+}
+.hero-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  color: #00d1ff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #00d1ff, 0 0 20px #8a2be2;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+.hero-logo span {
+  color: #8a2be2;
+  text-shadow: 0 0 8px #8a2be2;
+}
+.hero-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+.hero-nav a {
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+.hero-nav a:hover {
+  color: #00d1ff;
+  text-shadow: 0 0 10px #00d1ff;
+}
+.hero-headline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  line-height: 1.1;
+  letter-spacing: 1px;
+}
+.headline-blue {
+  color: #00d1ff;
+  text-shadow: 0 0 12px #00d1ff;
+}
+.headline-glow {
+  color: #8a2be2;
+  text-shadow: 0 0 18px #8a2be2, 0 0 30px #00d1ff;
+  margin-left: 0.5rem;
+}
+.hero-desc {
+  color: #b8c2d9;
+  font-size: 1.2rem;
+  margin-bottom: 2.2rem;
+}
+.hero-cta {
+  padding: 0.8rem 2.2rem;
+  font-size: 1.1rem;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  background: transparent;
+  border: 2px solid #00d1ff;
+  border-radius: 6px;
+  box-shadow: 0 0 10px #00d1ff;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.hero-cta:hover {
+  background: #00d1ff;
+  color: #0a0a16;
+}
+@media (max-width: 768px) {
+  .hero-headline { font-size: 2.1rem; }
+  .hero-logo { font-size: 1.5rem; }
+  .hero-nav { gap: 1rem; }
+}
