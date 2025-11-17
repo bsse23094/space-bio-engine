@@ -1,114 +1,76 @@
 <div class="dashboard">
-  <div class="nasa-badge">
-    <div class="nasa-logo">NASA</div>
-    <div class="nasa-text">SPACE BIOLOGY</div>
-  </div>
-
-  <h1 class="dashboard-title">
-    Unlock the Power of <span class="highlight">Space Biology</span>
-  </h1>
-  <p class="dashboard-subtitle">
-    Advanced research insights and cutting-edge knowledge at your fingertips. 
-    Explore the future of biological research in space.
-  </p>
-
-  <div class="mission-status">
-    <div class="status-item">
-      <span class="status-label">SYSTEM STATUS</span>
-      <span class="status-value active">OPERATIONAL</span>
+  <div class="hero-layout">
+    <div class="hero-left">
+      <div class="nasa-logo-container">
+        <img src="assets/nasa.png" alt="NASA" class="nasa-logo-img" />
+      </div>
+      <h1 class="dashboard-title">
+        Unlock the Power of <span class="highlight">Space Biology</span>
+      </h1>
+      <p class="dashboard-subtitle">
+        Advanced research insights and cutting-edge knowledge at your fingertips. 
+        Explore the future of biological research in space.
+      </p>
+      <div class="quick-stats">
+        <div class="quick-stat">
+          <div class="stat-value">{{ stats?.total_articles || '1,247' }}</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div class="quick-stat">
+          <div class="stat-value">{{ stats?.articles_with_topics || '892' }}</div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div class="quick-stat">
+          <div class="stat-value">{{ stats?.unique_topics || '67' }}</div>
+          <div class="stat-label">Topics</div>
+        </div>
+      </div>
+      <div class="cta-section">
+        <a routerLink="/articles" class="cta-button primary">Explore Articles</a>
+        <a routerLink="/search" class="cta-button">Advanced Search</a>
+      </div>
     </div>
-    <div class="status-item">
-      <span class="status-label">LAST UPDATE</span>
-      <span class="status-value">2025.10.05 14:32 UTC</span>
+    <div class="hero-right">
+      <div class="earth-container">
+        <div class="earth"></div>
+      </div>
     </div>
-    <div class="status-item">
-      <span class="status-label">NETWORK</span>
-      <span class="status-value active">ONLINE</span>
-    </div>
-  </div>
-
-  <div class="cta-section">
-    <a routerLink="/articles" class="cta-button primary">Explore Articles</a>
-    <a routerLink="/search" class="cta-button">Advanced Search</a>
   </div>
 
   <div *ngIf="loading" class="loading-message">Loading statistics...</div>
   <div *ngIf="error" class="error-message">{{ error }}</div>
 
-  <div class="stats-grid" *ngIf="stats && !loading">
-    <div class="stat-card">
-      <div class="card-header">DATABASE</div>
-      <div class="stat-number">{{ stats.total_articles || '1,247' }}</div>
-      <div class="stat-label">Research Articles</div>
-      <div class="card-footer">Active Records</div>
-    </div>
-    <div class="stat-card">
-      <div class="card-header">PUBLICATIONS</div>
-      <div class="stat-number">{{ stats.articles_with_topics || '892' }}</div>
-      <div class="stat-label">Peer-Reviewed</div>
-      <div class="card-footer">Verified Sources</div>
-    </div>
-    <div class="stat-card">
-      <div class="card-header">INSTITUTIONS</div>
-      <div class="stat-number">{{ stats.unique_topics || '67' }}</div>
-      <div class="stat-label">Global Partners</div>
-      <div class="card-footer">Collaborating</div>
+  <!-- Text Slider -->
+  <div class="text-slider">
+    <div class="slider-track">
+      <span class="slider-text">research analytics</span>
+      <span class="slider-separator">*</span>
+      <span class="slider-text">in-depth knowledge of space biology</span>
+      <span class="slider-separator">*</span>
+      <span class="slider-text">research analytics</span>
+      <span class="slider-separator">*</span>
+      <span class="slider-text">in-depth knowledge of space biology</span>
+      <span class="slider-separator">*</span>
+      <span class="slider-text">research analytics</span>
+      <span class="slider-separator">*</span>
+      <span class="slider-text">in-depth knowledge of space biology</span>
+      <span class="slider-separator">*</span>
     </div>
   </div>
 
   <!-- Analytics Section -->
   <div class="analytics-section" *ngIf="!loading">
-    <h2 class="section-title">Research Analytics</h2>
-    
     <!-- Topic Distribution -->
     <div class="analytics-card" *ngIf="topicDistribution.length > 0">
-      <h3 class="analytics-title">
-        <span class="icon">📊</span>
-        Topic Distribution
-      </h3>
       <div class="topic-chart">
-        <div *ngFor="let topic of topicDistribution.slice(0, 6)" class="topic-bar">
-          <div class="topic-info">
-            <span class="topic-name">{{ topic.topic_name || 'Topic ' + topic.topic_id }}</span>
-            <span class="topic-count">{{ topic.article_count }} articles</span>
-          </div>
+        <div *ngFor="let topic of topicDistribution.slice(0, 8)" class="topic-bar">
           <div class="bar-container">
             <div class="bar-fill" [style.width.%]="topic.percentage"></div>
-            <span class="bar-label">{{ topic.percentage?.toFixed(1) }}%</span>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Temporal Trends -->
-    <div class="analytics-card" *ngIf="temporalTrends.length > 0">
-      <h3 class="analytics-title">
-        <span class="icon">📈</span>
-        Publication Trends Over Time
-      </h3>
-      <div class="temporal-chart">
-        <div class="chart-container">
-          <div *ngFor="let trend of temporalTrends" class="trend-bar">
-            <div class="trend-fill" [style.height.%]="getRelativeHeight(trend.article_count)">
-              <span class="trend-count">{{ trend.article_count }}</span>
-            </div>
-            <span class="trend-year">{{ trend.year }}</span>
+          <div class="topic-info">
+            <span class="topic-name">{{ topic.topic_name || 'topic ' + topic.topic_id }}</span>
+            <span class="topic-percent">{{ topic.percentage?.toFixed(1) }}%</span>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Word Frequencies -->
-    <div class="analytics-card" *ngIf="wordFrequencies.length > 0">
-      <h3 class="analytics-title">
-        <span class="icon">🔤</span>
-        Top Research Keywords
-      </h3>
-      <div class="word-cloud">
-        <div *ngFor="let word of wordFrequencies" class="word-item" 
-             [style.font-size.rem]="getWordSize(word.frequency)">
-          {{ word.word }}
-          <span class="word-freq">({{ word.frequency }})</span>
         </div>
       </div>
     </div>

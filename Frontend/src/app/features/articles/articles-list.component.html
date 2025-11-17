@@ -1,15 +1,18 @@
-<div>
-  <h2>Articles</h2>
+<div class="articles-section">
+  <h2 class="section-title">Articles</h2>
 
-  <div *ngIf="loading">Loading articles...</div>
-  <div *ngIf="error" style="color: red">{{ error }}</div>
+  <div *ngIf="loading" class="error">Loading articles...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
 
-  <ul *ngIf="!loading && !error">
-    <li *ngFor="let a of articles">
+  <div class="articles-list" *ngIf="!loading && !error">
+    <div class="article-card" *ngFor="let a of articles">
       <h3>{{ a.title }}</h3>
-      <p *ngIf="a.authors">{{ a.authors.join(', ') }}</p>
-      <p *ngIf="a.journal">{{ a.journal }} • {{ a.year }}</p>
-      <a *ngIf="a.link" [href]="a.link" target="_blank">Read original</a>
-    </li>
-  </ul>
+      <div class="article-meta">
+        <span *ngIf="a.authors">{{ a.authors.join(', ') }}</span>
+        <span *ngIf="a.journal"> | {{ a.journal }}</span>
+        <span *ngIf="a.year"> • {{ a.year }}</span>
+      </div>
+      <a *ngIf="a.link" [href]="a.link" target="_blank" class="read-link">Read original</a>
+    </div>
+  </div>
 </div>

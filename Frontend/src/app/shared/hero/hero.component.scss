@@ -1,93 +1,269 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 .hero-section {
   position: relative;
-  width: 100vw;
-  min-height: 90vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0a0a16 60%, #232526 100%);
+  background: transparent;
   overflow: hidden;
+  padding: 8rem 2rem 4rem;
 }
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 0;
-  background: none;
-}
-.hero-content {
+
+.hero-container {
+  max-width: 1400px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
   position: relative;
   z-index: 2;
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 4rem 2rem 2rem;
 }
-.hero-logo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  color: #00d1ff;
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px #00d1ff, 0 0 20px #8a2be2;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-}
-.hero-logo span {
-  color: #8a2be2;
-  text-shadow: 0 0 8px #8a2be2;
-}
-.hero-nav {
+
+.hero-left {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 2rem;
-  margin-bottom: 2.5rem;
 }
-.hero-nav a {
-  color: #fff;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
-  text-decoration: none;
-  position: relative;
-  transition: color 0.2s;
+
+.nasa-logo-hero {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 8px 24px rgba(255, 255, 255, 0.15));
+  animation: float 3s ease-in-out infinite;
 }
-.hero-nav a:hover {
-  color: #00d1ff;
-  text-shadow: 0 0 10px #00d1ff;
+
+.nasa-logo-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 .hero-headline {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3.2rem;
-  font-weight: 700;
-  margin-bottom: 1.2rem;
-  line-height: 1.1;
-  letter-spacing: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
 }
-.headline-blue {
-  color: #00d1ff;
-  text-shadow: 0 0 12px #00d1ff;
-}
-.headline-glow {
-  color: #8a2be2;
-  text-shadow: 0 0 18px #8a2be2, 0 0 30px #00d1ff;
-  margin-left: 0.5rem;
-}
-.hero-desc {
-  color: #b8c2d9;
-  font-size: 1.2rem;
-  margin-bottom: 2.2rem;
-}
-.hero-cta {
-  padding: 0.8rem 2.2rem;
-  font-size: 1.1rem;
-  font-family: 'Orbitron', sans-serif;
+
+.headline-main {
+  font-size: 4rem;
+  font-weight: 800;
   color: #fff;
-  background: transparent;
-  border: 2px solid #00d1ff;
-  border-radius: 6px;
-  box-shadow: 0 0 10px #00d1ff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.headline-sub {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #00d1ff;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero-desc {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.hero-cta {
+  align-self: flex-start;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #00d1ff, #0099cc);
+  color: #0a0a1e;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 209, 255, 0.3);
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 209, 255, 0.5);
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.earth-container {
+  width: 600px;
+  height: 600px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px;
+}
+
+.earth {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: earthRotate 50s linear infinite;
+  background: 
+    radial-gradient(circle at 30% 30%, #3b82f6 0%, #2563eb 30%, #1e40af 60%, #1e3a8a 100%);
+  box-shadow: 
+    inset -80px -80px 150px rgba(0, 0, 0, 0.8),
+    inset 30px 30px 100px rgba(255, 255, 255, 0.08),
+    0 0 100px rgba(59, 130, 246, 0.4),
+    0 0 200px rgba(59, 130, 246, 0.2);
+}
+
+/* Continents layer with more visible landmasses */
+.earth::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: 
+    /* North America */
+    radial-gradient(ellipse 140px 100px at 20% 30%, rgba(34, 197, 94, 0.7) 0%, rgba(34, 197, 94, 0.4) 40%, transparent 60%),
+    /* Europe/Asia */
+    radial-gradient(ellipse 160px 90px at 50% 25%, rgba(34, 197, 94, 0.65) 0%, rgba(34, 197, 94, 0.35) 40%, transparent 55%),
+    /* Africa */
+    radial-gradient(ellipse 100px 130px at 45% 50%, rgba(34, 197, 94, 0.6) 0%, rgba(34, 197, 94, 0.3) 45%, transparent 60%),
+    /* South America */
+    radial-gradient(ellipse 80px 120px at 25% 60%, rgba(34, 197, 94, 0.65) 0%, rgba(34, 197, 94, 0.35) 40%, transparent 55%),
+    /* Australia */
+    radial-gradient(ellipse 90px 70px at 75% 65%, rgba(34, 197, 94, 0.55) 0%, rgba(34, 197, 94, 0.25) 45%, transparent 60%),
+    /* Asia East */
+    radial-gradient(ellipse 120px 100px at 70% 35%, rgba(34, 197, 94, 0.6) 0%, rgba(34, 197, 94, 0.3) 40%, transparent 55%),
+    /* Greenland */
+    radial-gradient(ellipse 60px 50px at 30% 15%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+  animation: continentsDrift 50s linear infinite;
+  filter: blur(0.5px);
+  mix-blend-mode: screen;
+}
+
+/* Atmosphere glow */
+.earth::after {
+  content: '';
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(135, 206, 250, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    transparent 50%
+  );
+  animation: atmosphere 15s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Outer glow ring */
+.earth-container::before {
+  content: '';
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 60%,
+    rgba(59, 130, 246, 0.15) 70%,
+    rgba(59, 130, 246, 0.05) 80%,
+    transparent 90%
+  );
+  animation: pulse 6s ease-in-out infinite;
+}
+
+@keyframes earthRotate {
+  from { transform: rotateY(0deg) rotateZ(-23.5deg); }
+  to { transform: rotateY(360deg) rotateZ(-23.5deg); }
+}
+
+@keyframes continentsDrift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-10%); }
+}
+
+@keyframes atmosphere {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .earth-container {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .earth-container::before {
+    width: 420px;
+    height: 420px;
+  }
+  
+  .headline-main {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 6rem 1.5rem 3rem;
+  }
+  
+  .nasa-logo-hero {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .headline-main {
+    font-size: 2.5rem;
+  }
+  
+  .headline-sub {
+    font-size: 1rem;
+  }
+  
+  .earth-container {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .earth-container::before {
+    width: 320px;
+    height: 320px;
+  }
 }
 .hero-cta:hover {
   background: #00d1ff;

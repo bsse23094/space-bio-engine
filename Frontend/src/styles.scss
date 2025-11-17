@@ -1,5 +1,4 @@
 /* Premium Dark Corporate Theme - Glassmorphism & Aurora Effects */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
 
 :root {
   --primary-cyan: #00d4ff;
@@ -15,15 +14,28 @@
   padding: 0;
 }
 
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Elms Sans', 'DM Sans', 'Inter', sans-serif;
   background: linear-gradient(135deg, #0a0a1e 0%, #1a0b2e 50%, #0a0a1e 100%);
   color: #fff;
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Elms Sans', 'DM Sans', 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.subheading, .label, label, .stat-label, .section-title, .analytics-title {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 /* Aurora Background Effect */

@@ -1,110 +1,288 @@
 .dashboard {
-  padding: 10rem 2rem 4rem;
-  max-width: 1400px;
+  padding: 2rem 2rem 4rem;
+  max-width: 1600px;
   margin: 0 auto;
-  text-align: center;
   position: relative;
 }
 
-.nasa-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 2px solid rgba(0, 212, 255, 0.3);
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  min-height: 90vh;
+  margin-bottom: 4rem;
+}
+
+.hero-left {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 2rem;
-  position: relative;
-  animation: float 6s ease-in-out infinite;
+  gap: 2rem;
+  text-align: left;
 }
 
-.nasa-badge::before {
+.nasa-logo-container {
+  width: 200px;
+  height: 200px;
+}
+
+.nasa-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 209, 255, 0.3));
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.earth-container {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.earth {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  transform-style: preserve-3d;
+  background: 
+    /* Saturn-like gradient - pale golden cream tones */
+    radial-gradient(circle at 30% 30%, 
+      #f5e6d3 0%, 
+      #e8d4b8 10%,
+      #d9c3a0 20%, 
+      #ccb186 35%, 
+      #b89968 50%,
+      #a8875a 65%,
+      #8a6f48 80%,
+      #5d4a32 95%
+    );
+  box-shadow: 
+    /* Strong terminator (day/night line) */
+    inset -160px -90px 200px rgba(0, 0, 0, 0.9),
+    /* Bright sunlit side */
+    inset 70px 50px 150px rgba(255, 255, 255, 0.25),
+    /* Subtle mid-tone */
+    inset -35px -35px 110px rgba(0, 0, 0, 0.5),
+    /* Specular highlight */
+    inset 90px 70px 70px rgba(255, 255, 255, 0.15),
+    /* Outer space glow - golden tint */
+    0 0 120px rgba(232, 212, 184, 0.5),
+    0 0 180px rgba(204, 177, 134, 0.3),
+    /* Cast shadow in space */
+    0 40px 100px rgba(0, 0, 0, 0.7);
+}
+
+/* Saturn-like atmospheric bands */
+.earth::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
-  opacity: 0.5;
-  filter: blur(10px);
+  background-image: 
+    /* Horizontal bands simulating Saturn's atmosphere */
+    linear-gradient(to bottom,
+      transparent 0%, 
+      rgba(139, 115, 85, 0.3) 10%,
+      transparent 12%,
+      rgba(168, 135, 90, 0.25) 18%,
+      transparent 20%,
+      rgba(184, 153, 104, 0.2) 28%,
+      transparent 30%,
+      rgba(139, 115, 85, 0.35) 38%,
+      transparent 40%,
+      rgba(204, 177, 134, 0.3) 48%,
+      transparent 50%,
+      rgba(139, 115, 85, 0.4) 58%,
+      transparent 60%,
+      rgba(168, 135, 90, 0.25) 68%,
+      transparent 70%,
+      rgba(184, 153, 104, 0.3) 78%,
+      transparent 80%,
+      rgba(139, 115, 85, 0.35) 88%,
+      transparent 90%,
+      rgba(93, 74, 50, 0.4) 95%,
+      transparent 100%
+    ),
+    /* Subtle cloud-like swirls */
+    radial-gradient(ellipse 200px 60px at 25% 35%, rgba(245, 230, 211, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 180px 50px at 65% 55%, rgba(232, 212, 184, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 150px 45px at 40% 68%, rgba(217, 195, 160, 0.1) 0%, transparent 50%);
+  filter: blur(1px);
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+}
+
+/* Saturn's Rings */
+.earth::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320%;
+  height: 320%;
+  transform: translate(-50%, -50%) rotateX(70deg) rotateY(10deg);
+  transform-style: preserve-3d;
+  pointer-events: none;
+  animation: ringRotate 50s linear infinite;
+  background: 
+    /* Multiple ring bands with gaps - wider spacing */
+    radial-gradient(
+      ellipse at center,
+      transparent 0%,
+      transparent 18%,
+      /* Inner C ring (faint) */
+      rgba(184, 153, 104, 0.15) 18.5%,
+      rgba(204, 177, 134, 0.2) 19.5%,
+      transparent 20%,
+      /* Gap */
+      transparent 20.5%,
+      /* Inner A ring */
+      rgba(204, 177, 134, 0.4) 21%,
+      rgba(232, 212, 184, 0.5) 22.5%,
+      rgba(217, 195, 160, 0.45) 23.5%,
+      rgba(204, 177, 134, 0.4) 24.5%,
+      /* Cassini Division (gap) */
+      rgba(93, 74, 50, 0.1) 25%,
+      transparent 26%,
+      /* Middle ring section */
+      rgba(217, 195, 160, 0.5) 26.5%,
+      rgba(232, 212, 184, 0.6) 28%,
+      rgba(245, 230, 211, 0.55) 29.5%,
+      rgba(217, 195, 160, 0.5) 31%,
+      /* Small gap */
+      rgba(93, 74, 50, 0.08) 31.5%,
+      transparent 32%,
+      /* B ring (brightest and widest) */
+      rgba(232, 212, 184, 0.7) 32.5%,
+      rgba(245, 230, 211, 0.8) 34%,
+      rgba(232, 212, 184, 0.75) 36%,
+      rgba(217, 195, 160, 0.7) 38%,
+      rgba(204, 177, 134, 0.65) 39.5%,
+      /* Transition gap */
+      rgba(184, 153, 104, 0.3) 40%,
+      transparent 40.5%,
+      /* Outer A ring */
+      rgba(184, 153, 104, 0.55) 41%,
+      rgba(204, 177, 134, 0.6) 42%,
+      rgba(217, 195, 160, 0.55) 43%,
+      rgba(184, 153, 104, 0.5) 44%,
+      /* Outer edge fade */
+      rgba(139, 115, 85, 0.35) 44.5%,
+      rgba(93, 74, 50, 0.2) 45.5%,
+      transparent 46.5%
+    );
+  box-shadow: 
+    0 0 60px rgba(232, 212, 184, 0.5),
+    inset 0 0 80px rgba(0, 0, 0, 0.6),
+    0 30px 80px rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+}
+
+/* Atmospheric halo - golden tint for Saturn */
+.earth-container::before {
+  content: '';
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 50%,
+    rgba(232, 212, 184, 0.15) 62%,
+    rgba(217, 195, 160, 0.1) 70%,
+    rgba(204, 177, 134, 0.05) 80%,
+    transparent 92%
+  );
+  animation: haloGlow 10s ease-in-out infinite;
+}
+
+/* Stars/space dust effect */
+.earth-container::after {
+  content: '';
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 25% 25%, transparent 30%, rgba(232, 212, 184, 0.02) 55%, transparent 75%),
+    radial-gradient(circle at 75% 75%, transparent 35%, rgba(217, 195, 160, 0.015) 60%, transparent 80%);
+  animation: cosmicPulse 20s ease-in-out infinite alternate;
   z-index: -1;
 }
 
-.nasa-logo {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 3px;
+@keyframes ringRotate {
+  from { transform: translate(-50%, -50%) rotateX(70deg) rotateY(10deg) rotateZ(0deg); }
+  to { transform: translate(-50%, -50%) rotateX(70deg) rotateY(10deg) rotateZ(360deg); }
 }
 
-.nasa-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.5rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
-  letter-spacing: 1px;
-  margin-top: -5px;
+@keyframes haloGlow {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.04); opacity: 1; }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+@keyframes cosmicPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.6; transform: scale(1.08) rotate(5deg); }
 }
 
-.mission-status {
+@keyframes atmosphereShift {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.quick-stats {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin: 2rem auto;
-  padding: 1.5rem 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  border-radius: 12px;
-  max-width: 800px;
-  font-family: 'Courier New', monospace;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 
-.status-item {
+.quick-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
-.status-label {
+.quick-stat .stat-value {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00d4ff;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  text-transform: lowercase;
+}
+
+.quick-stat .stat-label {
+  font-family: 'Syncopate', sans-serif;
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 1px;
-}
-
-.status-value {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
-}
-
-.status-value.active {
-  color: #00ff88;
-  text-shadow: 0 0 10px #00ff88;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
 }
 
 .dashboard-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 4rem;
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-size: 3.5rem;
   font-weight: 800;
-  text-align: center;
+  text-align: left;
   color: #fff;
-  margin-bottom: 1.5rem;
+  margin: 0;
   line-height: 1.2;
   letter-spacing: -1px;
 }
@@ -119,62 +297,163 @@
 }
 
 .dashboard-subtitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-size: 1.1rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 3rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 550px;
 }
 
 .cta-section {
-  margin-top: 3rem;
-  margin-bottom: 5rem;
   display: flex;
-  gap: 1.5rem;
-  justify-content: center;
+  gap: 1rem;
   align-items: center;
   flex-wrap: wrap;
 }
 
 .cta-button {
   display: inline-block;
-  padding: 1.2rem 3.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 2.5rem;
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px) saturate(180%);
   color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
+  border-radius: 50px;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  transition: all 0.4s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
 .cta-button.primary {
-  background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
   border: none;
-  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.4),
-              0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 48px rgba(0, 212, 255, 0.5),
-              0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .cta-button.primary:hover {
-  box-shadow: 0 12px 48px rgba(0, 212, 255, 0.6),
-              0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+}
+
+/* Text Slider */
+.text-slider {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.slider-track {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  animation: slideText 30s linear infinite;
+  white-space: nowrap;
+}
+
+.slider-text {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+}
+
+.slider-separator {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes slideText {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Analytics Section */
+.analytics-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.analytics-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.topic-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.topic-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.topic-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+}
+
+.topic-name {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+
+.topic-percent {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(0, 212, 255, 0.9);
+  letter-spacing: 0.05em;
+}
+
+.bar-container {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff 0%, #00b8e6 50%, #0099cc 100%);
+  border-radius: 10px;
+  transition: width 1s ease-out;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.7),
+              0 0 20px rgba(0, 212, 255, 0.4);
 }
 
 .stats-grid {
@@ -279,17 +558,73 @@
   border: 1px solid rgba(255, 107, 107, 0.3);
 }
 
+@media (max-width: 1200px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .earth-container {
+    width: 450px;
+    height: 450px;
+  }
+
+  .hero-left {
+    text-align: center;
+    align-items: center;
+  }
+
+  .dashboard-title {
+    text-align: center;
+  }
+
+  .dashboard-subtitle {
+    max-width: 600px;
+  }
+
+  .quick-stats {
+    justify-content: center;
+  }
+
+  .cta-section {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard {
-    padding: 8rem 1.5rem 3rem;
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .nasa-logo-container {
+    width: 100px;
+    height: 100px;
   }
 
   .dashboard-title {
     font-size: 2.5rem;
+    text-align: center;
   }
   
   .dashboard-subtitle {
     font-size: 1rem;
+  }
+
+  .earth-container {
+    width: 320px;
+    height: 320px;
+  }
+
+  .quick-stats {
+    gap: 1.5rem;
+  }
+
+  .quick-stat .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .quick-stat .stat-label {
+    font-size: 0.6rem;
   }
   
   .stat-number {
@@ -297,8 +632,8 @@
   }
   
   .cta-button {
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
+    padding: 0.9rem 2rem;
+    font-size: 0.7rem;
   }
 
   .stats-grid {

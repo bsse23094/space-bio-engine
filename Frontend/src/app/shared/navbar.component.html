@@ -1,19 +1,27 @@
-<nav class="navbar">
-  <div class="logo">SpaceBio<span>Engine</span></div>
-  <div class="menu-toggle" (click)="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-  <ul class="nav-links" [class.active]="menuOpen">
-    <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-    <li><a routerLink="/articles" routerLinkActive="active">Articles</a></li>
-    <li><a routerLink="/search" routerLinkActive="active">Search</a></li>
-  <!-- Removed About and Contact links -->
-  </ul>
-  <div class="mobile-menu" [class.active]="menuOpen">
-    <a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
-    <a routerLink="/articles" (click)="closeMenu()">Articles</a>
-    <a routerLink="/search" (click)="closeMenu()">Search</a>
-  <!-- Removed About and Contact links from mobile menu -->
-    <span class="close-menu" (click)="closeMenu()">&times;</span>
+<nav class="navbar pill-navbar" [class.compact]="compactNavbar">
+  <div class="navbar-content">
+    <div class="nasa-logo-wrapper">
+      <img src="assets/nasa.png" alt="NASA" class="nasa-logo" onerror="this.src='assets/nasa-logo.svg'" />
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active" title="Dashboard">
+          <span class="material-symbols-outlined nav-icon">dashboard</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/articles" routerLinkActive="active" title="Articles">
+          <span class="material-symbols-outlined nav-icon">article</span>
+          <span class="nav-label">Articles</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/search" routerLinkActive="active" title="Search">
+          <span class="material-symbols-outlined nav-icon">search</span>
+          <span class="nav-label">Search</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>

@@ -91,14 +91,20 @@ class VisualizationService:
             
             # Get top words for this topic
             top_words = []
-            if self.topics_df is not None and topic_id in self.topics_df.columns:
+            topic_name = f"topic {int(topic_id)}"
+            
+            if self.topics_df is not None:
                 topic_col = f"Topic {int(topic_id)}"
                 if topic_col in self.topics_df.columns:
-                    top_words = self.topics_df[topic_col].dropna().tolist()[:5]
+                    topic_words = self.topics_df[topic_col].dropna().tolist()
+                    if topic_words:
+                        top_words = topic_words[:5]
+                        # Extract first word as topic name
+                        topic_name = str(topic_words[0]).split()[0].lower()
             
             distribution.append(TopicDistribution(
                 topic_id=int(topic_id),
-                topic_name=f"Topic {int(topic_id)}",
+                topic_name=topic_name,
                 article_count=int(count),
                 percentage=round(percentage, 1),
                 top_words=top_words
@@ -176,11 +182,10 @@ class VisualizationService:
                 return WordCloudData(words={}, title=f"Topic {topic_id} - No Data")
             
             all_words = self.topics_df[topic_col].dropna().tolist()
-            title = f"Topic {topic_id} Word Cloud"
+            topic_name = str(self.topics_df[topic_col].dropna().tolist()[0]).split()[0]
         
         # Count word frequencies
         word_counts = Counter(all_words)
-        
         # Get top words
         top_words = dict(word_counts.most_common(max_words))
         
