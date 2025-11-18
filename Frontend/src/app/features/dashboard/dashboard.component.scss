@@ -1,353 +1,145 @@
 .dashboard {
-  padding: 2rem 2rem 4rem;
-  max-width: 1600px;
+  padding: 4rem 2rem;
+  max-width: 1400px;
   margin: 0 auto;
   position: relative;
+  background: transparent;
 }
 
 .hero-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  min-height: 90vh;
-  margin-bottom: 4rem;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  gap: 3rem;
+  margin-bottom: 6rem;
 }
 
 .hero-left {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  text-align: left;
+  align-items: center;
 }
 
 .nasa-logo-container {
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1rem;
 }
 
 .nasa-logo-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 10px 30px rgba(0, 209, 255, 0.3));
+  filter: drop-shadow(0 4px 20px rgba(0, 212, 255, 0.3));
 }
 
-.hero-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.dashboard-title {
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-size: 4rem;
+  font-weight: 200;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
-.earth-container {
-  width: 500px;
-  height: 500px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1200px;
-  perspective-origin: 50% 50%;
-  transform-style: preserve-3d;
+.dashboard-title .highlight {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
 }
 
-.earth {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  position: relative;
-  transform-style: preserve-3d;
-  background: 
-    /* Saturn-like gradient - pale golden cream tones */
-    radial-gradient(circle at 30% 30%, 
-      #f5e6d3 0%, 
-      #e8d4b8 10%,
-      #d9c3a0 20%, 
-      #ccb186 35%, 
-      #b89968 50%,
-      #a8875a 65%,
-      #8a6f48 80%,
-      #5d4a32 95%
-    );
-  box-shadow: 
-    /* Strong terminator (day/night line) */
-    inset -160px -90px 200px rgba(0, 0, 0, 0.9),
-    /* Bright sunlit side */
-    inset 70px 50px 150px rgba(255, 255, 255, 0.25),
-    /* Subtle mid-tone */
-    inset -35px -35px 110px rgba(0, 0, 0, 0.5),
-    /* Specular highlight */
-    inset 90px 70px 70px rgba(255, 255, 255, 0.15),
-    /* Outer space glow - golden tint */
-    0 0 120px rgba(232, 212, 184, 0.5),
-    0 0 180px rgba(204, 177, 134, 0.3),
-    /* Cast shadow in space */
-    0 40px 100px rgba(0, 0, 0, 0.7);
-}
-
-/* Saturn-like atmospheric bands */
-.earth::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-image: 
-    /* Horizontal bands simulating Saturn's atmosphere */
-    linear-gradient(to bottom,
-      transparent 0%, 
-      rgba(139, 115, 85, 0.3) 10%,
-      transparent 12%,
-      rgba(168, 135, 90, 0.25) 18%,
-      transparent 20%,
-      rgba(184, 153, 104, 0.2) 28%,
-      transparent 30%,
-      rgba(139, 115, 85, 0.35) 38%,
-      transparent 40%,
-      rgba(204, 177, 134, 0.3) 48%,
-      transparent 50%,
-      rgba(139, 115, 85, 0.4) 58%,
-      transparent 60%,
-      rgba(168, 135, 90, 0.25) 68%,
-      transparent 70%,
-      rgba(184, 153, 104, 0.3) 78%,
-      transparent 80%,
-      rgba(139, 115, 85, 0.35) 88%,
-      transparent 90%,
-      rgba(93, 74, 50, 0.4) 95%,
-      transparent 100%
-    ),
-    /* Subtle cloud-like swirls */
-    radial-gradient(ellipse 200px 60px at 25% 35%, rgba(245, 230, 211, 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 180px 50px at 65% 55%, rgba(232, 212, 184, 0.12) 0%, transparent 55%),
-    radial-gradient(ellipse 150px 45px at 40% 68%, rgba(217, 195, 160, 0.1) 0%, transparent 50%);
-  filter: blur(1px);
-  mix-blend-mode: multiply;
-  opacity: 0.7;
-}
-
-/* Saturn's Rings */
-.earth::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 320%;
-  height: 320%;
-  transform: translate(-50%, -50%) rotateX(70deg) rotateY(10deg);
-  transform-style: preserve-3d;
-  pointer-events: none;
-  animation: ringRotate 50s linear infinite;
-  background: 
-    /* Multiple ring bands with gaps - wider spacing */
-    radial-gradient(
-      ellipse at center,
-      transparent 0%,
-      transparent 18%,
-      /* Inner C ring (faint) */
-      rgba(184, 153, 104, 0.15) 18.5%,
-      rgba(204, 177, 134, 0.2) 19.5%,
-      transparent 20%,
-      /* Gap */
-      transparent 20.5%,
-      /* Inner A ring */
-      rgba(204, 177, 134, 0.4) 21%,
-      rgba(232, 212, 184, 0.5) 22.5%,
-      rgba(217, 195, 160, 0.45) 23.5%,
-      rgba(204, 177, 134, 0.4) 24.5%,
-      /* Cassini Division (gap) */
-      rgba(93, 74, 50, 0.1) 25%,
-      transparent 26%,
-      /* Middle ring section */
-      rgba(217, 195, 160, 0.5) 26.5%,
-      rgba(232, 212, 184, 0.6) 28%,
-      rgba(245, 230, 211, 0.55) 29.5%,
-      rgba(217, 195, 160, 0.5) 31%,
-      /* Small gap */
-      rgba(93, 74, 50, 0.08) 31.5%,
-      transparent 32%,
-      /* B ring (brightest and widest) */
-      rgba(232, 212, 184, 0.7) 32.5%,
-      rgba(245, 230, 211, 0.8) 34%,
-      rgba(232, 212, 184, 0.75) 36%,
-      rgba(217, 195, 160, 0.7) 38%,
-      rgba(204, 177, 134, 0.65) 39.5%,
-      /* Transition gap */
-      rgba(184, 153, 104, 0.3) 40%,
-      transparent 40.5%,
-      /* Outer A ring */
-      rgba(184, 153, 104, 0.55) 41%,
-      rgba(204, 177, 134, 0.6) 42%,
-      rgba(217, 195, 160, 0.55) 43%,
-      rgba(184, 153, 104, 0.5) 44%,
-      /* Outer edge fade */
-      rgba(139, 115, 85, 0.35) 44.5%,
-      rgba(93, 74, 50, 0.2) 45.5%,
-      transparent 46.5%
-    );
-  box-shadow: 
-    0 0 60px rgba(232, 212, 184, 0.5),
-    inset 0 0 80px rgba(0, 0, 0, 0.6),
-    0 30px 80px rgba(0, 0, 0, 0.7);
-  border-radius: 50%;
-}
-
-/* Atmospheric halo - golden tint for Saturn */
-.earth-container::before {
-  content: '';
-  position: absolute;
-  width: 110%;
-  height: 110%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    transparent 50%,
-    rgba(232, 212, 184, 0.15) 62%,
-    rgba(217, 195, 160, 0.1) 70%,
-    rgba(204, 177, 134, 0.05) 80%,
-    transparent 92%
-  );
-  animation: haloGlow 10s ease-in-out infinite;
-}
-
-/* Stars/space dust effect */
-.earth-container::after {
-  content: '';
-  position: absolute;
-  width: 140%;
-  height: 140%;
-  border-radius: 50%;
-  background: 
-    radial-gradient(circle at 25% 25%, transparent 30%, rgba(232, 212, 184, 0.02) 55%, transparent 75%),
-    radial-gradient(circle at 75% 75%, transparent 35%, rgba(217, 195, 160, 0.015) 60%, transparent 80%);
-  animation: cosmicPulse 20s ease-in-out infinite alternate;
-  z-index: -1;
-}
-
-@keyframes ringRotate {
-  from { transform: translate(-50%, -50%) rotateX(70deg) rotateY(10deg) rotateZ(0deg); }
-  to { transform: translate(-50%, -50%) rotateX(70deg) rotateY(10deg) rotateZ(360deg); }
-}
-
-@keyframes haloGlow {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.04); opacity: 1; }
-}
-
-@keyframes cosmicPulse {
-  0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
-  50% { opacity: 0.6; transform: scale(1.08) rotate(5deg); }
-}
-
-@keyframes atmosphereShift {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+.dashboard-subtitle {
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  margin: 0;
+  max-width: 600px;
+  letter-spacing: 0.01em;
 }
 
 .quick-stats {
   display: flex;
-  gap: 2rem;
-  margin-top: 1rem;
+  gap: 3rem;
+  margin-top: 2rem;
+  justify-content: center;
 }
 
 .quick-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .quick-stat .stat-value {
   font-family: 'Syncopate', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #00d4ff;
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  font-size: 3rem;
+  font-weight: 300;
+  color: #ffffff;
   text-transform: lowercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 }
 
 .quick-stat .stat-label {
   font-family: 'Syncopate', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
-  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.2em;
   text-transform: lowercase;
-}
-
-.dashboard-title {
-  font-family: 'Elms Sans', 'DM Sans', sans-serif;
-  font-size: 3.5rem;
-  font-weight: 800;
-  text-align: left;
-  color: #fff;
-  margin: 0;
-  line-height: 1.2;
-  letter-spacing: -1px;
-}
-
-.dashboard-title .highlight {
-  background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  display: inline-block;
-}
-
-.dashboard-subtitle {
-  font-family: 'Elms Sans', 'DM Sans', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.6;
-  margin: 0;
-  max-width: 550px;
 }
 
 .cta-section {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 .cta-button {
   display: inline-block;
-  padding: 1rem 2.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
+  padding: 0.9rem 2.5rem;
+  background: transparent;
   color: #fff;
   font-family: 'Syncopate', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 400;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   text-transform: lowercase;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cta-button.primary {
-  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
-  border: none;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
 }
 
 .cta-button:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.03);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .cta-button.primary:hover {
-  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+  background: rgba(255, 255, 255, 0.95);
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
 /* Text Slider */
@@ -391,335 +183,488 @@
 /* Analytics Section */
 .analytics-section {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 6rem auto 0;
+  padding: 0 2rem;
+}
+
+.analytics-title {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 6rem;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-size: 3rem;
+  font-weight: 200;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  margin-bottom: 0.5rem;
+}
+
+.stat-bar {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: width 1s ease-out;
+}
+
+/* Topic Distribution */
+.topic-distribution {
+  margin-bottom: 6rem;
+}
+
+.section-heading {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.25em;
+  text-transform: lowercase;
+  margin-bottom: 3rem;
+  text-align: left;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem 2rem;
+}
+
+.topic-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.topic-name {
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.topic-percentage {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.topic-bar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 1px;
+}
+
+.topic-bar-bg {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.topic-bar-fill {
+  position: absolute;
+  height: 1px;
+  background: #ffffff;
+  transition: width 1.2s ease-out;
+}
+
+.topic-count {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
+}
+
+/* Keywords Section */
+.keywords-section {
+  margin-bottom: 6rem;
+}
+
+/* Trends Visualization */
+.trends-visualization {
+  margin-bottom: 6rem;
+}
+
+.trend-graph {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 180px;
+  padding: 2rem 1rem 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trend-line {
+  position: absolute;
+  top: 2rem;
+  left: 1rem;
+  right: 1rem;
+  bottom: 3rem;
+  width: calc(100% - 2rem);
+  height: calc(100% - 5rem);
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.trend-line polyline {
+  transition: all 1s ease-out;
+  vector-effect: non-scaling-stroke;
+}
+
+.trend-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2;
+}
+
+.column-bar {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 1s ease-out;
+  min-height: 2px;
+  position: relative;
+}
+
+.column-bar::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.trend-column:hover .column-bar {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.trend-column:hover .column-bar::after {
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.column-label {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.45rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  text-align: center;
+  position: absolute;
+  bottom: -2.5rem;
+  width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .trends-visualization .trend-graph {
+    height: 160px;
+    padding: 2rem 0.5rem 4rem;
+  }
+
+  .trends-visualization .trend-line {
+    left: 0.5rem;
+    right: 0.5rem;
+    width: calc(100% - 1rem);
+  }
+
+  .trends-visualization .column-label {
+    font-size: 0.35rem;
+    letter-spacing: 0.05em;
+    width: 50px;
+    bottom: -3rem;
+    writing-mode: vertical-rl;
+    transform: translateX(-50%) rotate(180deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .trends-visualization {
+    margin-bottom: 5rem;
+  }
+
+  .trends-visualization .trend-graph {
+    height: 140px;
+    padding: 1.5rem 0.25rem 4.5rem;
+  }
+
+  .trends-visualization .trend-line {
+    left: 0.25rem;
+    right: 0.25rem;
+    width: calc(100% - 0.5rem);
+  }
+
+  .trends-visualization .column-label {
+    font-size: 0.32rem;
+    letter-spacing: 0.03em;
+    width: 40px;
+    bottom: -3.5rem;
+  }
+
+  .trends-visualization .column-bar::after {
+    width: 4px;
+    height: 4px;
+  }
+
+  .trends-visualization .section-heading {
+    font-size: 0.6rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Keywords Section */
+.keywords-section {
+  margin-bottom: 6rem;
+}
+
+.keywords-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.keyword-tag {
+  font-family: 'Elms Sans', 'DM Sans', sans-serif;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s ease;
+  cursor: default;
+  letter-spacing: 0.02em;
+}
+
+.keyword-tag:hover {
+  color: #ffffff;
+}
+
+/* Research Areas */
+.research-areas {
+  margin-bottom: 6rem;
+}
+
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.area-card {
+  background: #000000;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: background 0.3s ease;
+  cursor: default;
+}
+
+.area-card:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.area-icon {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.area-name {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
+  text-align: center;
 }
 
 .analytics-card {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
+  background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 2rem;
+  border-radius: 0;
+  padding: 3rem 2rem;
 }
 
 .topic-chart {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .topic-bar {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .topic-info {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.75rem;
-}
-
-.topic-name {
-  font-family: 'Syncopate', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.1em;
-  text-transform: lowercase;
-}
-
-.topic-percent {
-  font-family: 'Syncopate', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: rgba(0, 212, 255, 0.9);
-  letter-spacing: 0.05em;
 }
 
 .bar-container {
   width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0;
   overflow: hidden;
   position: relative;
 }
 
 .bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #00d4ff 0%, #00b8e6 50%, #0099cc 100%);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 0;
   transition: width 1s ease-out;
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.7),
-              0 0 20px rgba(0, 212, 255, 0.4);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2.5rem;
-  margin-top: 4rem;
-}
-
-.stat-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 2.5rem 2rem;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.card-header {
-  font-family: 'Courier New', monospace;
-  font-size: 0.75rem;
-  color: rgba(0, 212, 255, 0.8);
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-.card-footer {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 1rem;
-  letter-spacing: 1px;
-}
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-  border-color: rgba(0, 212, 255, 0.5);
-}
-
-.stat-card:hover::before {
-  opacity: 1;
-}
-
-.stat-number {
-  font-family: 'Poppins', sans-serif;
-  font-size: 3.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.stat-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  z-index: 1;
 }
 
 .loading-message {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-weight: 300;
   text-align: center;
   padding: 2rem;
 }
 
 .error-message {
   color: #ff6b6b;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 300;
   text-align: center;
   padding: 2rem;
-  background: rgba(255, 107, 107, 0.1);
-  border-radius: 12px;
+  background: transparent;
   border: 1px solid rgba(255, 107, 107, 0.3);
-}
-
-@media (max-width: 1200px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .earth-container {
-    width: 450px;
-    height: 450px;
-  }
-
-  .hero-left {
-    text-align: center;
-    align-items: center;
-  }
-
-  .dashboard-title {
-    text-align: center;
-  }
-
-  .dashboard-subtitle {
-    max-width: 600px;
-  }
-
-  .quick-stats {
-    justify-content: center;
-  }
-
-  .cta-section {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .dashboard {
-    padding: 1.5rem 1.5rem 3rem;
-  }
-
-  .nasa-logo-container {
-    width: 100px;
-    height: 100px;
-  }
-
-  .dashboard-title {
-    font-size: 2.5rem;
-    text-align: center;
-  }
-  
-  .dashboard-subtitle {
-    font-size: 1rem;
-  }
-
-  .earth-container {
-    width: 320px;
-    height: 320px;
-  }
-
-  .quick-stats {
-    gap: 1.5rem;
-  }
-
-  .quick-stat .stat-value {
-    font-size: 1.5rem;
-  }
-
-  .quick-stat .stat-label {
-    font-size: 0.6rem;
-  }
-  
-  .stat-number {
-    font-size: 2.5rem;
-  }
-  
-  .cta-button {
-    padding: 0.9rem 2rem;
-    font-size: 0.7rem;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .mission-status {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .nasa-badge {
-    width: 100px;
-    height: 100px;
-  }
-
-  .nasa-logo {
-    font-size: 1.6rem;
-  }
+  border-radius: 0;
 }
 
 .research-categories {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 1rem;
+  justify-content: center;
   margin-top: 4rem;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .category-chip {
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  padding: 0.7rem 1.5rem;
-  border-radius: 30px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  padding: 0.6rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .category-chip:hover {
-  background: rgba(0, 212, 255, 0.2);
-  border-color: rgba(0, 212, 255, 0.6);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+  border-color: #00d4ff;
+  color: #00d4ff;
 }
 
-// Analytics Section Styles
-.analytics-section {
-  margin-top: 5rem;
-  width: 100%;
-  max-width: 1400px;
-}
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 3rem 1.5rem;
+  }
 
-.section-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 3rem;
-  background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+  .dashboard-title {
+    font-size: 2.5rem;
+  }
 
-.analytics-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 2.5rem;
-  margin-bottom: 2.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
+  .dashboard-subtitle {
+    font-size: 0.9rem;
+  }
 
-.analytics-card:hover {
-  border-color: rgba(0, 212, 255, 0.3);
-  box-shadow: 0 12px 48px rgba(0, 212, 255, 0.2);
+  .quick-stats {
+    gap: 2rem;
+  }
+
+  .quick-stat .stat-value {
+    font-size: 2rem;
+  }
+
+  .slider-text {
+    font-size: 1.5rem;
+  }
+
+  .nasa-logo-container {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .analytics-title {

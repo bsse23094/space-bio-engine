@@ -12,33 +12,45 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
-    // Create stars
-    const starsContainer = document.getElementById('stars');
-    if (starsContainer) {
-      for (let i = 0; i < 120; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.opacity = (0.5 + Math.random() * 0.5).toString();
-        star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
-        starsContainer.appendChild(star);
+    this.createStarfield();
+  }
+
+  createStarfield() {
+    const starfield = document.getElementById('starfield');
+    if (!starfield) return;
+
+    // Create static stars
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      const size = Math.random();
+      
+      if (size < 0.6) {
+        star.className = 'star small';
+      } else if (size < 0.9) {
+        star.className = 'star medium';
+      } else {
+        star.className = 'star large';
       }
+      
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.animationDuration = (2 + Math.random() * 3) + 's';
+      
+      starfield.appendChild(star);
     }
 
-    // Create glowing lines
-    const glowLinesContainer = document.getElementById('glowLines');
-    if (glowLinesContainer) {
-      setInterval(() => {
-        const line = document.createElement('div');
-        line.className = 'glow-line';
-        line.style.top = Math.random() * 100 + '%';
-        line.style.width = (30 + Math.random() * 40) + '%';
-        line.style.animationDelay = Math.random() * 2 + 's';
-        glowLinesContainer.appendChild(line);
-
-        setTimeout(() => line.remove(), 10000);
-      }, 3000);
-    }
+    // Create shooting stars periodically
+    setInterval(() => {
+      const shootingStar = document.createElement('div');
+      shootingStar.className = 'shooting-star';
+      shootingStar.style.top = Math.random() * 50 + '%';
+      shootingStar.style.left = Math.random() * 100 + '%';
+      shootingStar.style.animationDuration = (2 + Math.random() * 2) + 's';
+      
+      starfield.appendChild(shootingStar);
+      
+      setTimeout(() => shootingStar.remove(), 3000);
+    }, 8000);
   }
 }

@@ -60,28 +60,120 @@
 
   <!-- Analytics Section -->
   <div class="analytics-section" *ngIf="!loading">
-    <!-- Topic Distribution -->
-    <div class="analytics-card" *ngIf="topicDistribution.length > 0">
-      <div class="topic-chart">
-        <div *ngFor="let topic of topicDistribution.slice(0, 8)" class="topic-bar">
-          <div class="bar-container">
-            <div class="bar-fill" [style.width.%]="topic.percentage"></div>
-          </div>
-          <div class="topic-info">
-            <span class="topic-name">{{ topic.topic_name || 'topic ' + topic.topic_id }}</span>
-            <span class="topic-percent">{{ topic.percentage?.toFixed(1) }}%</span>
-          </div>
+    
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-number">{{ stats?.total_articles || '0' }}</div>
+        <div class="stat-label">total articles</div>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" [style.width.%]="100"></div>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ stats?.articles_with_topics || '0' }}</div>
+        <div class="stat-label">with topics</div>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" [style.width.%]="getPercentage(stats?.articles_with_topics, stats?.total_articles)"></div>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ stats?.unique_topics || '0' }}</div>
+        <div class="stat-label">unique topics</div>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" [style.width.%]="70"></div>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ topicDistribution.length || '0' }}</div>
+        <div class="stat-label">active topics</div>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" [style.width.%]="85"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="research-categories">
-    <div class="category-chip">Microgravity Biology</div>
-    <div class="category-chip">Plant Science</div>
-    <div class="category-chip">Human Physiology</div>
-    <div class="category-chip">Radiation Effects</div>
-    <div class="category-chip">Cell Biology</div>
-    <div class="category-chip">Astrobiology</div>
+    <!-- Topic Distribution -->
+    <div class="topic-distribution" *ngIf="topicDistribution.length > 0">
+      <h3 class="section-heading">topic distribution</h3>
+      <div class="topic-grid">
+        <div *ngFor="let topic of topicDistribution.slice(0, 6)" class="topic-item">
+          <div class="topic-header">
+            <span class="topic-name">{{ topic.topic_name || 'topic ' + topic.topic_id }}</span>
+            <span class="topic-percentage">{{ topic.percentage?.toFixed(1) }}%</span>
+          </div>
+          <div class="topic-bar-wrapper">
+            <div class="topic-bar-bg"></div>
+            <div class="topic-bar-fill" [style.width.%]="topic.percentage"></div>
+          </div>
+          <div class="topic-count">{{ topic.article_count }} articles</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Graph: Publication Trends -->
+    <div class="trends-visualization" *ngIf="topicDistribution.length > 0">
+      <h3 class="section-heading">publication trends</h3>
+      <div class="trend-graph">
+        <svg class="trend-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline 
+            [attr.points]="getGraphPoints()" 
+            fill="none" 
+            stroke="rgba(255, 255, 255, 0.3)" 
+            stroke-width="0.3"
+            vector-effect="non-scaling-stroke"/>
+        </svg>
+        <div *ngFor="let topic of topicDistribution.slice(0, 8); let i = index" class="trend-column">
+          <div class="column-bar" 
+               [style.height.%]="getRelativeHeight(topic.article_count)"
+               [style.transition-delay.s]="i * 0.1">
+          </div>
+          <div class="column-label">{{ topic.topic_name || 'topic ' + topic.topic_id }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Keywords -->
+    <div class="keywords-section" *ngIf="wordFrequencies.length > 0">
+      <h3 class="section-heading">top keywords</h3>
+      <div class="keywords-cloud">
+        <span *ngFor="let word of wordFrequencies.slice(0, 20)" 
+              class="keyword-tag"
+              [style.fontSize.rem]="getWordSize(word.frequency)">
+          {{ word.word }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Research Areas -->
+    <div class="research-areas">
+      <h3 class="section-heading">research areas</h3>
+      <div class="areas-grid">
+        <div class="area-card">
+          <div class="area-icon">◆</div>
+          <div class="area-name">Microgravity Biology</div>
+        </div>
+        <div class="area-card">
+          <div class="area-icon">◆</div>
+          <div class="area-name">Plant Science</div>
+        </div>
+        <div class="area-card">
+          <div class="area-icon">◆</div>
+          <div class="area-name">Human Physiology</div>
+        </div>
+        <div class="area-card">
+          <div class="area-icon">◆</div>
+          <div class="area-name">Radiation Effects</div>
+        </div>
+        <div class="area-card">
+          <div class="area-icon">◆</div>
+          <div class="area-name">Cell Biology</div>
+        </div>
+        <div class="area-card">
+          <div class="area-icon">◆</div>
+          <div class="area-name">Astrobiology</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
