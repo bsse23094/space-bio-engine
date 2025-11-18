@@ -335,149 +335,132 @@
   margin-bottom: 6rem;
 }
 
-.trend-graph {
+.chart-container {
   position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  height: 180px;
-  padding: 2rem 1rem 3rem;
+  height: 220px;
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.trend-line {
-  position: absolute;
-  top: 2rem;
-  left: 1rem;
-  right: 1rem;
-  bottom: 3rem;
-  width: calc(100% - 2rem);
-  height: calc(100% - 5rem);
-  pointer-events: none;
-  z-index: 1;
-  overflow: visible;
-}
-
-.trend-line polyline {
-  transition: all 1s ease-out;
-  vector-effect: non-scaling-stroke;
-}
-
-.trend-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  justify-content: flex-end;
-  position: relative;
-  z-index: 2;
-}
-
-.column-bar {
-  width: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  transition: all 1s ease-out;
-  min-height: 2px;
-  position: relative;
-}
-
-.column-bar::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.trend-column:hover .column-bar {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.trend-column:hover .column-bar::after {
-  width: 7px;
-  height: 7px;
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-}
-
-.column-label {
-  font-family: 'Syncopate', sans-serif;
-  font-size: 0.45rem;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.25);
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
-  text-align: center;
-  position: absolute;
-  bottom: -2.5rem;
-  width: 70px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 /* Mobile Optimization */
 @media (max-width: 768px) {
-  .trends-visualization .trend-graph {
-    height: 160px;
-    padding: 2rem 0.5rem 4rem;
+  .dashboard {
+    padding: 3rem 1.5rem;
   }
 
-  .trends-visualization .trend-line {
-    left: 0.5rem;
-    right: 0.5rem;
-    width: calc(100% - 1rem);
+  .dashboard-title {
+    font-size: 3rem;
   }
 
-  .trends-visualization .column-label {
-    font-size: 0.35rem;
-    letter-spacing: 0.05em;
-    width: 50px;
-    bottom: -3rem;
-    writing-mode: vertical-rl;
-    transform: translateX(-50%) rotate(180deg);
+  .dashboard-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .quick-stats {
+    gap: 2rem;
+  }
+
+  .quick-stat .stat-value {
+    font-size: 2.2rem;
+  }
+
+  .cta-section {
+    gap: 1rem;
+  }
+
+  .analytics-section {
+    padding: 0 1.5rem;
+  }
+
+  .chart-container {
+    height: 200px;
+    padding: 0.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .topic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .keywords-cloud {
+    gap: 1rem 1.5rem;
+  }
+
+  .areas-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .trends-visualization {
-    margin-bottom: 5rem;
+  .dashboard {
+    padding: 2rem 1rem;
   }
 
-  .trends-visualization .trend-graph {
-    height: 140px;
-    padding: 1.5rem 0.25rem 4.5rem;
+  .dashboard-title {
+    font-size: 2.2rem;
   }
 
-  .trends-visualization .trend-line {
-    left: 0.25rem;
-    right: 0.25rem;
-    width: calc(100% - 0.5rem);
+  .dashboard-subtitle {
+    font-size: 0.85rem;
   }
 
-  .trends-visualization .column-label {
-    font-size: 0.32rem;
-    letter-spacing: 0.03em;
-    width: 40px;
-    bottom: -3.5rem;
+  .quick-stats {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
-  .trends-visualization .column-bar::after {
-    width: 4px;
-    height: 4px;
+  .quick-stat .stat-value {
+    font-size: 2rem;
   }
 
-  .trends-visualization .section-heading {
-    font-size: 0.6rem;
-    margin-bottom: 2rem;
+  .cta-section {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .cta-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .text-slider {
+    font-size: 1.5rem;
+  }
+
+  .analytics-section {
+    padding: 0 1rem;
+    margin: 4rem auto 0;
+  }
+
+  .chart-container {
+    height: 180px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .keywords-cloud {
+    gap: 0.8rem 1rem;
+  }
+
+  .keyword-tag {
+    font-size: 0.7rem !important;
+  }
+
+  .areas-grid {
+    grid-template-columns: 1fr;
   }
 }
 

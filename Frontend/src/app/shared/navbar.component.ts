@@ -20,15 +20,11 @@ export class NavbarComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    
     if (scrollTop > this.lastScrollTop && scrollTop > 100) {
-      // Scrolling down - compact
       this.compactNavbar = true;
     } else if (scrollTop < this.lastScrollTop) {
-      // Scrolling up - expand
       this.compactNavbar = false;
     }
-    
     this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   }
 }

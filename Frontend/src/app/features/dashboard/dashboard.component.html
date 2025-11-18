@@ -11,20 +11,6 @@
         Advanced research insights and cutting-edge knowledge at your fingertips. 
         Explore the future of biological research in space.
       </p>
-      <div class="quick-stats">
-        <div class="quick-stat">
-          <div class="stat-value">{{ stats?.total_articles || '1,247' }}</div>
-          <div class="stat-label">Articles</div>
-        </div>
-        <div class="quick-stat">
-          <div class="stat-value">{{ stats?.articles_with_topics || '892' }}</div>
-          <div class="stat-label">Publications</div>
-        </div>
-        <div class="quick-stat">
-          <div class="stat-value">{{ stats?.unique_topics || '67' }}</div>
-          <div class="stat-label">Topics</div>
-        </div>
-      </div>
       <div class="cta-section">
         <a routerLink="/articles" class="cta-button primary">Explore Articles</a>
         <a routerLink="/search" class="cta-button">Advanced Search</a>
@@ -114,22 +100,8 @@
     <!-- Visual Graph: Publication Trends -->
     <div class="trends-visualization" *ngIf="topicDistribution.length > 0">
       <h3 class="section-heading">publication trends</h3>
-      <div class="trend-graph">
-        <svg class="trend-line" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polyline 
-            [attr.points]="getGraphPoints()" 
-            fill="none" 
-            stroke="rgba(255, 255, 255, 0.3)" 
-            stroke-width="0.3"
-            vector-effect="non-scaling-stroke"/>
-        </svg>
-        <div *ngFor="let topic of topicDistribution.slice(0, 8); let i = index" class="trend-column">
-          <div class="column-bar" 
-               [style.height.%]="getRelativeHeight(topic.article_count)"
-               [style.transition-delay.s]="i * 0.1">
-          </div>
-          <div class="column-label">{{ topic.topic_name || 'topic ' + topic.topic_id }}</div>
-        </div>
+      <div class="chart-container">
+        <canvas #lineChart></canvas>
       </div>
     </div>
 

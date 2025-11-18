@@ -8,6 +8,7 @@
     "start-dev": "node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng serve",
     "build": "node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng build",
     "build-prod": "node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng build --configuration production",
+    "deploy": "node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng build --configuration production --base-href /space-bio-engine/",
     "test": "ng test",
     "lint": "ng lint"
   },

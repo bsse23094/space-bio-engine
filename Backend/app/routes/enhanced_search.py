@@ -19,9 +19,16 @@ from app.services.enhanced_search_service import EnhancedSearchService
 
 router = APIRouter()
 
+# Create singleton instance of search service
+_search_service_instance = None
+
 # Dependency to get enhanced search service
 def get_search_service():
-    return EnhancedSearchService()
+    global _search_service_instance
+    if _search_service_instance is None:
+        print("Creating new EnhancedSearchService instance...")
+        _search_service_instance = EnhancedSearchService()
+    return _search_service_instance
 
 @router.post("/search/semantic", response_model=ArticleSearchResponse)
 async def semantic_search(

@@ -1,30 +1,80 @@
 # 🚀 Space Biology Knowledge Engine
 
-A comprehensive web application for exploring, searching, and visualizing space biology research data.
+[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://bsse23094.github.io/space-bio-engine)
+[![Python](https://img.shields.io/badge/python-3.13-blue)](https://www.python.org/)
+[![Angular](https://img.shields.io/badge/angular-18-red)](https://angular.io/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-teal)](https://fastapi.tiangolo.com/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+A state-of-the-art web application for exploring, searching, and visualizing NASA space biology research data. Built with modern web technologies and powered by advanced semantic search algorithms.
+
+![Dashboard Preview](docs/dashboard-preview.png)
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Features](#features)
+- [Demo](#demo)
 - [Quick Start](#quick-start)
 - [Architecture](#architecture)
-- [Features](#features)
-- [Requirements](#requirements)
+- [Technology Stack](#technology-stack)
 - [Installation](#installation)
-- [Running the Application](#running-the-application)
 - [API Documentation](#api-documentation)
-- [Troubleshooting](#troubleshooting)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## 🎯 Overview
 
-The Space Biology Knowledge Engine is a full-stack web application that provides:
+The **Space Biology Knowledge Engine** is a comprehensive research platform that provides scientists, researchers, and space enthusiasts with powerful tools to explore over **624 curated space biology publications** from NASA's Open Science Data Repository. 
 
-- **Backend**: FastAPI server with comprehensive REST API
-- **Frontend**: Angular application with modern UI
-- **Data Analysis**: 624+ space biology research articles
-- **Visualizations**: Interactive charts, graphs, and network analysis
-- **Search**: Advanced semantic search with AI-powered similarity
+### Key Capabilities
+
+- **🔍 Semantic Search**: TF-IDF powered search engine with cosine similarity ranking
+- **📊 Data Visualization**: Interactive charts showing temporal trends, topic distributions, and research statistics
+- **📚 Article Management**: Browse, filter, and explore research articles with rich metadata
+- **🎨 Modern UI**: Sleek, minimal design with smooth animations and responsive layout
+- **⚡ Fast Performance**: Optimized backend with singleton service pattern and efficient data loading
+- **🌐 RESTful API**: Comprehensive FastAPI backend with automatic documentation
+
+## ✨ Features
+
+### Dashboard
+- **Real-time Statistics**: Total articles, topics coverage, and research metrics
+- **Topic Distribution**: Visual breakdown of research areas (Plant Biology, Microbiology, Bone & Muscle, etc.)
+- **Temporal Trends**: Line chart showing publication trends over time with smooth animations
+- **Quick Access**: Direct navigation to articles and search functionality
+
+### Search Engine
+- **Semantic Search**: Find articles based on meaning, not just keywords
+- **Result Ranking**: Articles ranked by relevance using TF-IDF vectorization
+- **Rich Metadata**: View titles, authors, publication years, topics, and journal information
+- **Direct Links**: Quick access to original PubMed Central articles
+
+### Articles Browser
+- **Paginated Display**: Efficient loading of large datasets
+- **Numbered Cards**: Elegant card-based layout with fade-in animations
+- **Full Metadata**: Access complete article information including abstracts and keywords
+- **External Links**: One-click access to source articles
+
+### Visualizations
+- **Interactive Charts**: Built with Chart.js for smooth, responsive visualizations
+- **Word Clouds**: Topic-based word clouds for visual exploration
+- **Network Analysis**: Explore relationships between research topics and themes
+
+
+## 🎬 Demo
+
+**Live Demo**: [https://bsse23094.github.io/space-bio-engine](https://bsse23094.github.io/space-bio-engine)
+
+**API Documentation**: [Backend API Docs](https://your-backend-url.onrender.com/docs)
 
 ## 🚀 Quick Start
+
+### Prerequisites
+- **Python 3.13+** (Backend)
+- **Node.js 18+** (Frontend)
+- **npm 9+** (Package manager)
 
 ### One-Command Startup
 
@@ -37,18 +87,109 @@ start_app.bat
 #### Linux/Mac
 
 ```bash
+chmod +x start_app.sh
 ./start_app.sh
 ```
 
-That's it! The script will:
+The startup script will automatically:
 
-1. ✅ Set up virtual environment for backend
-2. ✅ Install all dependencies
-3. ✅ Start backend server (port 8000)
-4. ✅ Start frontend server (port 4200)
-5. ✅ Open the application in your browser
+1. ✅ Create Python virtual environment
+2. ✅ Install backend dependencies
+3. ✅ Install frontend dependencies  
+4. ✅ Start backend server on `http://localhost:8000`
+5. ✅ Start frontend server on `http://localhost:4200`
+6. ✅ Open application in your default browser
 
-### Access the Application
+### Access Points
+
+- **Frontend**: http://localhost:4200
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+- **API Redoc**: http://localhost:8000/redoc
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Angular Frontend                     │
+│              (Port 4200 - Development)                  │
+│  ┌──────────┐  ┌──────────┐  ┌────────────────────┐   │
+│  │Dashboard │  │  Search  │  │  Articles Browser  │   │
+│  └──────────┘  └──────────┘  └────────────────────┘   │
+│         │              │                 │              │
+│         └──────────────┴─────────────────┘              │
+│                        │                                │
+│                   API Service                           │
+└────────────────────────┼────────────────────────────────┘
+                         │ HTTP/REST
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                  FastAPI Backend                        │
+│              (Port 8000 - API Server)                   │
+│  ┌──────────────┐  ┌─────────────────────────────┐    │
+│  │   Routes     │  │    Services                  │    │
+│  │ ─────────    │  │ ────────────                 │    │
+│  │ /articles    │  │ EnhancedSearchService        │    │
+│  │ /search      │  │ VisualizationService         │    │
+│  │ /visual      │  │ ArticleService               │    │
+│  └──────────────┘  └─────────────────────────────┘    │
+│                              │                          │
+│                              ▼                          │
+│  ┌────────────────────────────────────────────────┐   │
+│  │         Data Layer                              │   │
+│  │  ─────────────────                              │   │
+│  │  • CSV: 624 Articles (datasets/)                │   │
+│  │  • Embeddings: 384-dim vectors (artifacts/)     │   │
+│  │  • TF-IDF Matrix: 1000 features                 │   │
+│  │  • Topics: 8 research categories                │   │
+│  └────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Data Flow
+
+1. **User Interaction** → Angular Frontend receives input
+2. **API Request** → HTTP request sent to FastAPI backend
+3. **Service Processing** → Backend services process data using:
+   - TF-IDF vectorization for semantic search
+   - Pandas DataFrames for data manipulation
+   - Scikit-learn for similarity calculations
+4. **Response** → JSON data returned to frontend
+5. **Rendering** → Angular components display results with Chart.js visualizations
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **Framework**: Angular 18 (Standalone Components)
+- **Language**: TypeScript 5.5+
+- **Styling**: SCSS with custom design system
+- **Charts**: Chart.js 4.x
+- **HTTP Client**: Angular HttpClient with RxJS
+- **Fonts**: Elms Sans, Syncopate
+- **Icons**: Material Symbols Outlined
+
+### Backend
+- **Framework**: FastAPI 0.100+
+- **Language**: Python 3.13
+- **Data Processing**: 
+  - Pandas 2.x (Data manipulation)
+  - NumPy (Numerical operations)
+- **Machine Learning**:
+  - Scikit-learn (TF-IDF, cosine similarity)
+- **Server**: Uvicorn (ASGI server)
+- **Validation**: Pydantic v2
+
+### Database & Storage
+- **Articles**: CSV (624 publications)
+- **Embeddings**: NumPy binary format (.npy)
+- **Metadata**: JSON
+- **Topics**: CSV with keywords
+
+### DevOps
+- **Version Control**: Git + GitHub
+- **Frontend Hosting**: GitHub Pages
+- **Backend Hosting**: Render.com / Railway.app
+- **CI/CD**: GitHub Actions### Access the Application
 
 Once started, you can access:
 
@@ -409,6 +550,175 @@ pytest
 ```bash
 cd Frontend
 ng test
+```
+
+## 🌐 Deployment
+
+### Frontend Deployment (GitHub Pages)
+
+#### Prerequisites
+- GitHub repository set up
+- GitHub Pages enabled in repository settings
+
+#### Steps
+
+1. **Build for Production**
+```bash
+cd Frontend
+npm run build -- --configuration production --base-href /space-bio-engine/
+```
+
+2. **Deploy to GitHub Pages**
+```bash
+# Install Angular CLI globally if needed
+npm install -g @angular/cli
+
+# Deploy using Angular CLI
+ng deploy --base-href=/space-bio-engine/
+```
+
+Or manually:
+```bash
+# Install gh-pages
+npm install -g angular-cli-ghpages
+
+# Deploy
+npx angular-cli-ghpages --dir=dist/frontend/browser
+```
+
+3. **Access Your Site**
+- URL: `https://[username].github.io/space-bio-engine`
+- Example: `https://bsse23094.github.io/space-bio-engine`
+
+#### GitHub Pages Configuration
+- **Source**: Deploy from `gh-pages` branch
+- **Custom Domain**: Optional
+- **Enforce HTTPS**: Recommended
+
+### Backend Deployment (Render.com - Free Tier)
+
+#### Prerequisites
+- Render.com account (free)
+- GitHub repository connected
+
+#### Steps
+
+1. **Create `render.yaml`** (if not exists)
+```yaml
+services:
+  - type: web
+    name: space-bio-backend
+    env: python
+    buildCommand: pip install -r Backend/requirements.txt
+    startCommand: cd Backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+```
+
+2. **Deploy on Render.com**
+   - Go to [render.com](https://render.com)
+   - Connect your GitHub repository
+   - Select "New Web Service"
+   - Choose your repository
+   - Configure:
+     - **Name**: `space-bio-backend`
+     - **Environment**: Python 3
+     - **Build Command**: `pip install -r Backend/requirements.txt`
+     - **Start Command**: `cd Backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+     - **Plan**: Free
+
+3. **Environment Variables**
+   - `PYTHON_VERSION`: 3.13.0
+   - `PORT`: Auto-assigned by Render
+
+4. **Access Your API**
+   - URL: `https://space-bio-backend.onrender.com`
+   - Docs: `https://space-bio-backend.onrender.com/docs`
+
+#### Alternative: Railway.app
+
+1. **Install Railway CLI**
+```bash
+npm install -g @railway/cli
+railway login
+```
+
+2. **Deploy**
+```bash
+cd Backend
+railway init
+railway up
+```
+
+3. **Set Environment**
+```bash
+railway variables set PYTHON_VERSION=3.13.0
+```
+
+#### Update Frontend API URL
+
+After backend deployment, update the frontend API endpoint:
+
+**File**: `Frontend/src/environments/environment.prod.ts`
+```typescript
+export const environment = {
+  production: true,
+  apiUrl: 'https://space-bio-backend.onrender.com/api/v1'
+};
+```
+
+Rebuild and redeploy frontend after changing API URL.
+
+### CORS Configuration
+
+Ensure backend allows frontend domain:
+
+**File**: `Backend/app/main.py`
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://bsse23094.github.io",
+        "http://localhost:4200"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+### Continuous Deployment
+
+#### GitHub Actions (Optional)
+
+Create `.github/workflows/deploy.yml`:
+```yaml
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install and Build
+        run: |
+          cd Frontend
+          npm ci
+          npm run build -- --configuration production
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Frontend/dist/frontend/browser
 ```
 
 ## 📝 License

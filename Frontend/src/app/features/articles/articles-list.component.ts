@@ -3,13 +3,14 @@ import { ApiService } from '../../core/services/api.service';
 import { Article } from '../../core/models/article.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-articles-list',
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule, LoadingComponent]
 })
 export class ArticlesListComponent implements OnInit {
   articles: Article[] = [];

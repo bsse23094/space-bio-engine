@@ -30,9 +30,19 @@ class EnhancedSearchService:
     """
     
     def __init__(self):
-        self.data_path = "../datasets/sb_publications_clean.csv"
-        self.embeddings_path = "../datasets/embeddings.npy"
-        self.metadata_path = "../datasets/metadata.json"
+        # Try multiple path options
+        base_paths = ["../datasets", "datasets", "../../datasets"]
+        self.data_path = None
+        self.embeddings_path = None
+        self.metadata_path = None
+        
+        for base in base_paths:
+            csv_path = os.path.join(base, "sb_publications_clean.csv")
+            if os.path.exists(csv_path):
+                self.data_path = csv_path
+                self.embeddings_path = os.path.join(base, "embeddings.npy")
+                self.metadata_path = os.path.join(base, "metadata.json")
+                break
         
         # Load data
         self.df = None
@@ -46,26 +56,37 @@ class EnhancedSearchService:
         """Load datasets for search functionality"""
         try:
             # Load main publications data
-            if os.path.exists(self.data_path):
+            if self.data_path and os.path.exists(self.data_path):
+                print(f"Loading CSV from: {self.data_path}")
                 self.df = pd.read_csv(self.data_path)
+                print(f"Loaded {len(self.df)} articles")
                 # Extract year from links
                 self.df['year'] = self.df['link'].str.extract(r'PMC(\d{4})')
                 self.df['year'] = pd.to_numeric(self.df['year'], errors='coerce')
                 self.df['year'] = self.df['year'].where(
                     (self.df['year'] >= 1990) & (self.df['year'] <= 2024)
                 )
+            else:
+                print(f"CSV file not found at: {self.data_path}")
             
             # Load embeddings
-            if os.path.exists(self.embeddings_path):
+            if self.embeddings_path and os.path.exists(self.embeddings_path):
                 self.embeddings = np.load(self.embeddings_path)
+                print(f"Loaded embeddings: {self.embeddings.shape}")
             
             # Load metadata
-            if os.path.exists(self.metadata_path):
-                with open(self.metadata_path, 'r') as f:
-                    self.metadata = json.load(f)
+            if self.metadata_path and os.path.exists(self.metadata_path):
+                try:
+                    with open(self.metadata_path, 'r') as f:
+                        self.metadata = json.load(f)
+                    print(f"Loaded metadata")
+                except json.JSONDecodeError as e:
+                    print(f"Warning: Could not load metadata: {e}")
+                    self.metadata = []
             
             # Initialize TF-IDF vectorizer for text search
             if self.df is not None and 'clean_text' in self.df.columns:
+                print("Initializing TF-IDF vectorizer...")
                 self.vectorizer = TfidfVectorizer(
                     max_features=1000,
                     stop_words='english',
@@ -73,9 +94,14 @@ class EnhancedSearchService:
                 )
                 texts = self.df['clean_text'].fillna('').tolist()
                 self.tfidf_matrix = self.vectorizer.fit_transform(texts)
+                print(f"TF-IDF matrix shape: {self.tfidf_matrix.shape}")
+            else:
+                print("Cannot initialize TF-IDF: No data or clean_text column missing")
                 
         except Exception as e:
             print(f"Error loading search data: {e}")
+            import traceback
+            traceback.print_exc()
     
     async def semantic_search(self, search_request: EmbeddingSearchRequest) -> ArticleSearchResponse:
         """
@@ -86,7 +112,7 @@ class EnhancedSearchService:
         - More accurate than keyword search
         - Returns articles semantically similar to query
         """
-        if self.df is None or self.embeddings is None:
+        if self.df is None or self.tfidf_matrix is None:
             return ArticleSearchResponse(
                 articles=[],
                 total_count=0,
@@ -103,31 +129,31 @@ class EnhancedSearchService:
             similarities = cosine_similarity(query_vector, self.tfidf_matrix).flatten()
             
             # Get top similar articles
-            top_indices = np.argsort(similarities)[::-1]
-            
-            # Filter by similarity threshold
-            filtered_indices = []
-            for idx in top_indices:
-                if similarities[idx] >= search_request.similarity_threshold:
-                    filtered_indices.append(idx)
-                if len(filtered_indices) >= search_request.limit:
-                    break
+            top_indices = np.argsort(similarities)[::-1][:search_request.limit]
             
             # Convert to articles
             articles = []
-            for idx in filtered_indices:
-                row = self.df.iloc[idx]
-                article = Article(
-                    id=int(idx),
-                    title=row['title'],
-                    link=row.get('link'),
-                    text=row.get('text'),
-                    clean_text=row.get('clean_text'),
-                    word_count=row.get('word_count'),
-                    topic=row.get('topic'),
-                    year=row.get('year')
-                )
-                articles.append(article)
+            for idx in top_indices:
+                try:
+                    row = self.df.iloc[idx]
+                    # Handle NaN values
+                    year_val = row.get('year')
+                    if pd.isna(year_val):
+                        year_val = None
+                    
+                    article = Article(
+                        id=int(idx),
+                        title=row['title'],
+                        link=row.get('link'),
+                        text=row.get('text'),
+                        clean_text=row.get('clean_text'),
+                        word_count=row.get('word_count') if not pd.isna(row.get('word_count')) else None,
+                        topic=row.get('topic') if not pd.isna(row.get('topic')) else None,
+                        year=year_val
+                    )
+                    articles.append(article)
+                except Exception as e:
+                    continue  # Skip articles with errors
             
             search_time = (time.time() - start_time) * 1000
             

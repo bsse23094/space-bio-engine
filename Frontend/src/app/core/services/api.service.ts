@@ -23,8 +23,13 @@ export class ApiService {
     return this.http.get<any>(`${this.base}/visualizations/statistics`);
   }
 
-  searchArticles(query: string): Observable<any> {
-    return this.http.get<any>(`${this.base}/articles/search`, { params: { q: query } });
+  searchArticles(query: string, limit: number = 10): Observable<any> {
+    return this.http.post<any>(`${this.base}/search/semantic`, {
+      query: query,
+      limit: limit,
+      similarity_threshold: 0.3,
+      use_semantic_search: true
+    });
   }
 
   // Visualization endpoints

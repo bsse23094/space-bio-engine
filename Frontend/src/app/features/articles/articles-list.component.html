@@ -1,18 +1,29 @@
-<div class="articles-section">
-  <h2 class="section-title">Articles</h2>
+<app-loading *ngIf="loading"></app-loading>
 
-  <div *ngIf="loading" class="error">Loading articles...</div>
+<div class="articles-section" *ngIf="!loading">
+  <div class="articles-header">
+    <h2 class="section-title">research articles</h2>
+    <p class="section-subtitle">explore space biology publications</p>
+  </div>
+
   <div *ngIf="error" class="error">{{ error }}</div>
 
-  <div class="articles-list" *ngIf="!loading && !error">
-    <div class="article-card" *ngFor="let a of articles">
-      <h3>{{ a.title }}</h3>
+  <div class="articles-grid" *ngIf="!error">
+    <div class="article-card" *ngFor="let a of articles; let i = index" [style.animation-delay.ms]="i * 50">
+      <div class="card-number">{{ (i + 1).toString().padStart(2, '0') }}</div>
+      <h3 class="article-title">{{ a.title }}</h3>
       <div class="article-meta">
-        <span *ngIf="a.authors">{{ a.authors.join(', ') }}</span>
-        <span *ngIf="a.journal"> | {{ a.journal }}</span>
-        <span *ngIf="a.year"> • {{ a.year }}</span>
+        <span class="meta-item" *ngIf="a.authors">{{ a.authors[0] }}</span>
+        <span class="meta-divider" *ngIf="a.authors && a.year">•</span>
+        <span class="meta-item" *ngIf="a.year">{{ a.year }}</span>
       </div>
-      <a *ngIf="a.link" [href]="a.link" target="_blank" class="read-link">Read original</a>
+      <div class="article-footer">
+        <span class="journal" *ngIf="a.journal">{{ a.journal }}</span>
+        <a *ngIf="a.link" [href]="a.link" target="_blank" class="read-link">
+          <span>view</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>

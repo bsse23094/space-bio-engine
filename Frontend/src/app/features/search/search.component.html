@@ -1,16 +1,57 @@
-<section class="search-section">
-  <h2 class="section-title">Semantic Search</h2>
+<app-loading *ngIf="loading"></app-loading>
+
+<section class="search-section" *ngIf="!loading">
+  <div class="search-header">
+    <h2 class="section-title">semantic search</h2>
+    <p class="section-subtitle">discover research through natural language</p>
+  </div>
+
   <form (submit)="search(); $event.preventDefault()" class="search-form">
-    <input type="text" [(ngModel)]="query" placeholder="Search articles..." />
-    <button type="submit" class="search-btn">Search</button>
-  </form>
-  <div *ngIf="loading">Searching...</div>
-  <div *ngIf="error" class="error">{{ error }}</div>
-  <div class="search-results">
-    <div *ngFor="let result of results" class="result-card">
-      <h3>{{ result.title }}</h3>
-      <p>{{ result.abstract }}</p>
-      <span class="result-meta">{{ result.year }} | {{ result.topic }}</span>
+    <div class="search-input-wrapper">
+      <span class="material-symbols-outlined search-icon">search</span>
+      <input 
+        type="text" 
+        [(ngModel)]="query" 
+        placeholder="search articles..." 
+        class="search-input"
+      />
     </div>
+    <button type="submit" class="search-btn">
+      <span>search</span>
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+  </form>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="search-results" *ngIf="results.length > 0">
+    <div class="results-header">
+      <span class="results-count">{{ results.length }} results</span>
+      <span class="search-time" *ngIf="searchTime > 0">{{ searchTime.toFixed(1) }}ms</span>
+    </div>
+    <div class="result-card" *ngFor="let result of results; let i = index" [style.animation-delay.ms]="i * 40">
+      <div class="result-number">{{ (i + 1).toString().padStart(2, '0') }}</div>
+      <h3 class="result-title">{{ result.title }}</h3>
+      <p class="result-abstract" *ngIf="result.clean_text">{{ result.clean_text.substring(0, 200) }}...</p>
+      <div class="result-footer">
+        <span class="result-meta" *ngIf="result.year">
+          <span class="material-symbols-outlined">calendar_month</span>
+          {{ result.year }}
+        </span>
+        <span class="result-meta" *ngIf="result.topic !== null && result.topic !== undefined">
+          <span class="material-symbols-outlined">label</span>
+          topic {{ result.topic }}
+        </span>
+        <a *ngIf="result.link" [href]="result.link" target="_blank" class="result-link">
+          <span>view</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="!error && results.length === 0 && query">
+    <span class="material-symbols-outlined empty-icon">search_off</span>
+    <p>no results found</p>
   </div>
 </section>
