@@ -72,7 +72,11 @@ app = FastAPI(
 # CORS middleware for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=[
+        "http://localhost:4200",  # Local development
+        "https://bsse23094.github.io",  # GitHub Pages production
+        "https://*.onrender.com",  # Render.com deployment
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

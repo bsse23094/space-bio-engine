@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: space-bio-engine-backend
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: cd Backend && pip install -r requirements.txt
+    startCommand: cd Backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: PORT
+        generateValue: true
+    autoDeploy: true
+    healthCheckPath: /
